@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "./untruffle/compile.sh; node ./untruffle/buildContractJSON.js",
     "deploy": "node ./deploy",
-    "ganache": "SECRET=`cat ./secret.txt` && node ./node_modules/ganache-cli/cli.js -i 5777 -p 7545 -m \"$SECRET\""
+    "ganache": "SECRET=`cat ./secret.txt` && node ./node_modules/ganache-cli/cli.js -i 5777 -p 7545 -m \"$SECRET\"",
+    "task": "node ./tasks"
   },
   "author": "Joe Bernitt",
   "license": "ISC",

@@ -4,10 +4,6 @@ const utils = require("@utils/index.js");
 let deployAccount = utils.ethersAccount(0)
 
 const main = async () => {
-
-    let n = await utils.provider.getNetwork()
-    console.log(n)
-
     console.log("Deployment not configured yet!")
     await deployExample()
 }

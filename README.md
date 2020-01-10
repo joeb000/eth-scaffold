@@ -20,4 +20,9 @@ I recommend updating the `secrets.json` and `secret.txt` files with a new mnemon
     npm run compile
     npm run deploy
 
+### Run custom scripts to interact with deployed contracts
+
+    npm run task
+
+
 Figure the rest out yourself.
