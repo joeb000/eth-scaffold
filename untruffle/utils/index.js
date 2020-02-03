@@ -1,6 +1,7 @@
 require('module-alias/register')
 
 const ethers = require("ethers");
+
 //uncomment and run `npm install ipfs-http-client` to use IPFS
 //const ipfs = require("./ipfs");
 const misc = require("./misc");
@@ -33,11 +34,19 @@ if (process.env.NETWORK === "mainnet") {
   networkID = "5777"; //todo
   networkName = 'ganache'
 }
-
-console.log(provider)
-
-const secrets = require('@root/secrets.json')
-const mnemonic = secrets.mnemonic;
+let mnemonic
+try {
+  const secrets = require('@root/secrets.json')
+  mnemonic = secrets.mnemonic;
+} catch (error) {
+  console.warn("NO MNEMONIC SET: using default")
+  if (networkID="5777") {
+    mnemonic = "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat";
+  } else {
+    console.log("Please set a secrets.json file in the root")
+    exit()
+  }
+}
 
 const ethersAccount = i => {
   const path = "m/44'/60'/0'/0/" + i;
@@ -56,6 +65,12 @@ const getDeployedContract = (name) => {
   let contract = require(`@deployed/${networkName}/${name}.json`)
   return getContract(contract.networks[networkID].address, contract.abi)
 }
+
+// const getWeb3DeployedContract = (name) => {
+//   let contract = require(`@deployed/${networkName}/${name}.json`)
+//   let myContract = new web3.eth.Contract(contract.abi, contract.networks[networkID].address)
+//   return myContract
+// }
 
 const deployContractAndWriteToFile = async (contractName, deployerWallet, params) => {
   //check if output dir exists, if not create it
@@ -112,5 +127,6 @@ module.exports = {
   getContract,
   emptyAddress,
   parseUnits: ethers.utils.parseUnits,
-  deployContractAndWriteToFile
+  deployContractAndWriteToFile,
+  //getWeb3DeployedContract
 };
